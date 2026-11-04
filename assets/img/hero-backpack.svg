@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bagGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1D4ED8" />
+      <stop offset="100%" stop-color="#0B2A5B" />
+    </linearGradient>
+    <linearGradient id="pocketGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#1E40AF" />
+    </linearGradient>
+    <linearGradient id="tagGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+    <linearGradient id="bubbleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EFF6FF" />
+      <stop offset="100%" stop-color="#DBEAFE" />
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#0B2A5B" flood-opacity="0.18" />
+    </filter>
+  </defs>
+
+  <!-- Background decorative circular bubbles and campus leaves -->
+  <circle cx="250" cy="240" r="170" fill="url(#bubbleGrad)" opacity="0.6" />
+  <circle cx="100" cy="130" r="18" fill="#DBEAFE" opacity="0.7" />
+  <circle cx="410" cy="180" r="12" fill="#93C5FD" opacity="0.5" />
+  <circle cx="80" cy="310" r="24" fill="#E0E7FF" opacity="0.5" />
+  <circle cx="430" cy="340" r="28" fill="#DBEAFE" opacity="0.6" />
+
+  <!-- Foliage / Plants -->
+  <path d="M 80 340 C 90 280, 140 270, 150 330 Z" fill="#93C5FD" opacity="0.4" />
+  <path d="M 120 350 C 130 290, 180 280, 190 340 Z" fill="#60A5FA" opacity="0.3" />
+  <path d="M 370 340 C 360 270, 310 260, 300 330 Z" fill="#93C5FD" opacity="0.4" />
+  <path d="M 410 350 C 400 280, 350 280, 340 340 Z" fill="#60A5FA" opacity="0.3" />
+
+  <!-- Ground Shadow -->
+  <ellipse cx="250" cy="385" rx="140" ry="20" fill="#0B2A5B" opacity="0.12" />
+
+  <!-- Large Floating Location Pin above backpack -->
+  <g transform="translate(250, 95)" filter="url(#softShadow)">
+    <path d="M 0 -45 C -25 -45, -45 -25, -45 0 C -45 28, 0 65, 0 65 C 0 65, 45 28, 45 0 C 45 -25, 25 -45, 0 -45 Z" fill="#0B2A5B" />
+    <circle cx="0" cy="-3" r="18" fill="#FFFFFF" />
+    <circle cx="0" cy="-3" r="9" fill="#1D4ED8" />
+  </g>
+
+  <!-- Backpack Body -->
+  <g filter="url(#softShadow)">
+    <!-- Backpack Top Handle -->
+    <path d="M 215 155 C 215 125, 285 125, 285 155" fill="none" stroke="#0F172A" stroke-width="12" stroke-linecap="round" />
+
+    <!-- Main Bag Compartment -->
+    <rect x="170" y="150" width="160" height="200" rx="48" fill="url(#bagGrad)" />
+
+    <!-- Top Curved Zipper Flap -->
+    <path d="M 180 185 Q 250 160 320 185" fill="none" stroke="#60A5FA" stroke-width="4" stroke-dasharray="6,4" />
+
+    <!-- Front Zipper Pocket -->
+    <rect x="188" y="240" width="124" height="95" rx="20" fill="url(#pocketGrad)" stroke="#1D4ED8" stroke-width="2" />
+    <!-- Pocket Zipper -->
+    <line x1="202" y1="262" x2="298" y2="262" stroke="#93C5FD" stroke-width="3" stroke-linecap="round" stroke-dasharray="5,3" />
+
+    <!-- Small Front Tag / LostLink Label -->
+    <rect x="235" y="280" width="30" height="18" rx="4" fill="#FFFFFF" />
+    <line x1="240" y1="286" x2="260" y2="286" stroke="#1D4ED8" stroke-width="2" />
+    <line x1="240" y1="291" x2="255" y2="291" stroke="#94A3B8" stroke-width="1.5" />
+
+    <!-- Left & Right Strap Buckles -->
+    <rect x="155" y="270" width="16" height="50" rx="8" fill="#1E3A8A" />
+    <rect x="329" y="270" width="16" height="50" rx="8" fill="#1E3A8A" />
+
+    <!-- Hanging Luggage Tag / ID Card -->
+    <g transform="translate(305, 220) rotate(15)">
+      <!-- String -->
+      <line x1="0" y1="0" x2="0" y2="28" stroke="#F59E0B" stroke-width="2.5" />
+      <!-- Tag Card -->
+      <rect x="-18" y="28" width="36" height="48" rx="6" fill="url(#tagGrad)" stroke="#CBD5E1" stroke-width="1.5" filter="url(#softShadow)" />
+      <circle cx="0" cy="36" r="3.5" fill="#F59E0B" />
+      <rect x="-12" y="46" width="24" height="4" rx="2" fill="#1D4ED8" />
+      <rect x="-12" y="54" width="18" height="3" rx="1.5" fill="#64748B" />
+      <rect x="-12" y="60" width="14" height="3" rx="1.5" fill="#94A3B8" />
+    </g>
+  </g>
+</svg>

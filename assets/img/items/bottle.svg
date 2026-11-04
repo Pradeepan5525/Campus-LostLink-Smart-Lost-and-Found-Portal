@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="100%" height="100%">
+  <rect width="80" height="80" rx="16" fill="#F1F5F9"/>
+  <!-- Bottle cap -->
+  <rect x="36" y="16" width="8" height="6" rx="2" fill="#0F172A"/>
+  <rect x="34" y="22" width="12" height="4" rx="1" fill="#334155"/>
+  <!-- Bottle body -->
+  <rect x="29" y="26" width="22" height="38" rx="6" fill="#0F172A"/>
+  <!-- Grip bands -->
+  <line x1="31" y1="36" x2="47" y2="36" stroke="#475569" stroke-width="2"/>
+  <line x1="31" y1="42" x2="47" y2="42" stroke="#475569" stroke-width="2"/>
+</svg>
