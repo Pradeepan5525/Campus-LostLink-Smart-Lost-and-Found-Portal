@@ -1,10 +1,11 @@
 
 <?php
+declare(strict_types=1);
 /**
  * Campus LostLink — Database Configuration & App Constants
  */
 
-declare(strict_types=1);
+
 
 // ==========================================
 // 1. APPLICATION CONSTANTS
