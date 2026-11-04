@@ -12,3 +12,4 @@ desktop.ini
 # User uploaded files (preserve directory with .gitkeep)
 uploads/*
 !uploads/.gitkeep
+
