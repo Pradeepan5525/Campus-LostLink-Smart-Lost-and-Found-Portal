@@ -34,48 +34,54 @@ define('ALLOWED_MIME_TYPES', [
     'image/svg+xml' => 'svg'
 ]);
 
-// Database Credentials
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_PORT', getenv('DB_PORT') ?: '5432');
-define('DB_NAME', getenv('DB_NAME') ?: 'campus_lostlink');
-define('DB_USER', getenv('DB_USER') ?: 'postgres');
-define('DB_PASS', getenv('DB_PASS') ?: '1234');
+// Database Credentials from Environment Variables (supports DB_*, PG*, and DATABASE_URL)
+if ($dbUrl = getenv('DATABASE_URL')) {
+    $dbParts = parse_url($dbUrl);
+    $host     = $dbParts['host'] ?? 'localhost';
+    $port     = (string)($dbParts['port'] ?? '5432');
+    $dbname   = ltrim($dbParts['path'] ?? 'campus_lostlink', '/');
+    $user     = $dbParts['user'] ?? 'postgres';
+    $password = $dbParts['pass'] ?? '';
+} else {
+    $host     = getenv('DB_HOST') ?: getenv('PGHOST') ?: 'localhost';
+    $dbname   = getenv('DB_NAME') ?: getenv('PGDATABASE') ?: 'campus_lostlink';
+    $user     = getenv('DB_USER') ?: getenv('PGUSER') ?: 'postgres';
+    $password = getenv('DB_PASSWORD') ?: getenv('DB_PASS') ?: getenv('PGPASSWORD') ?: '1234';
+    $port     = getenv('DB_PORT') ?: getenv('PGPORT') ?: '5432';
+}
+
+if (!defined('DB_HOST')) define('DB_HOST', $host);
+if (!defined('DB_PORT')) define('DB_PORT', $port);
+if (!defined('DB_NAME')) define('DB_NAME', $dbname);
+if (!defined('DB_USER')) define('DB_USER', $user);
+if (!defined('DB_PASS')) define('DB_PASS', $password);
+
+try {
+    $pdo = new PDO(
+        "pgsql:host=$host;port=$port;dbname=$dbname",
+        $user,
+        $password
+    );
+
+    $pdo->setAttribute(
+        PDO::ATTR_ERRMODE,
+        PDO::ERRMODE_EXCEPTION
+    );
+    $pdo->setAttribute(
+        PDO::ATTR_DEFAULT_FETCH_MODE,
+        PDO::FETCH_ASSOC
+    );
+
+} catch (PDOException $e) {
+    error_log($e->getMessage());
+    die("Database connection failed.");
+}
 
 /**
- * Returns a singleton PDO connection to the PostgreSQL database.
+ * Returns the active PDO database connection singleton.
  */
 function get_db_connection(): PDO
 {
-    static $pdo = null;
-
-    if ($pdo === null) {
-        $dsn = sprintf('pgsql:host=%s;port=%s;dbname=%s', DB_HOST, DB_PORT, DB_NAME);
-        $options = [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => false,
-        ];
-
-        try {
-            $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
-        } catch (PDOException $e) {
-            // Friendly error message for users, with hints for setup
-            http_response_code(500);
-            echo '<div style="font-family: Inter, sans-serif; max-width: 600px; margin: 40px auto; padding: 24px; border: 1px solid #fed7aa; background: #fffbeb; border-radius: 8px;">';
-            echo '<h2 style="color: #9a3412; margin-top: 0;">Database Connection Error</h2>';
-            echo '<p style="color: #7c2d12;">Could not connect to PostgreSQL database <strong>' . htmlspecialchars(DB_NAME) . '</strong>.</p>';
-            echo '<p style="color: #4b5563; font-size: 14px;"><strong>Error details:</strong> ' . htmlspecialchars($e->getMessage()) . '</p>';
-            echo '<div style="background: #f8fafc; padding: 12px; border-radius: 6px; font-size: 13px; color: #334155;">';
-            echo '<strong>Troubleshooting Checklist:</strong><br>';
-            echo '1. Ensure PostgreSQL service is running on port 5432.<br>';
-            echo '2. Verify database <code>campus_lostlink</code> exists (import <code>database/schema.sql</code> and <code>seed.sql</code>).<br>';
-            echo '3. Check password in <code>config/db.php</code> (default: <code>1234</code> or <code>postgres</code>).<br>';
-            echo '4. Verify <code>pdo_pgsql</code> extension is enabled in <code>php.ini</code>.';
-            echo '</div>';
-            echo '</div>';
-            exit;
-        }
-    }
-
+    global $pdo;
     return $pdo;
 }
